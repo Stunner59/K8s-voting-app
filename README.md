@@ -58,47 +58,29 @@ Susbcribe:
 [https://www.youtube.com/@cloudchamp?
 ](https://www.youtube.com/@cloudchamp?sub_confirmation=1)
 
+Create EC2 Instance e2-standard (Optional)
 
-Create EKS cluster with NodeGroup (2 nodes of t2.medium instance type)
-Create EC2 Instance t2.micro (Optional)
-
-##IAM role for ec2	
+Install gcloud CLI:
 ```
-{
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Effect": "Allow",
-		"Action": [
-			"eks:DescribeCluster",
-			"eks:ListClusters",
-			"eks:DescribeNodegroup",
-			"eks:ListNodegroups",
-			"eks:ListUpdates",
-			"eks:AccessKubernetesApi"
-		],
-		"Resource": "*"
-	}]
-}
+sudo apt-get install apt-transport-https ca-certificates gnupg curl
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+sudo apt-get update && sudo apt-get install google-cloud-cli
+
+gcloud init
+
 ```
 
 Install Kubectl:
 ```
-curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-sudo cp ./kubectl /usr/local/bin
-export PATH=/usr/local/bin:$PATH
-```
-
-Install AWScli:
-```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
+grep -rhE ^deb /etc/apt/sources.list* | grep "cloud-sdk"
+sudo apt-get install -y kubectl
+sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 ```
 
 Once the Cluster is ready run the command to set context:
 ```
-aws eks update-kubeconfig --name EKS_CLUSTER_NAME --region us-west-2
+gcloud container clusters get-credentials <cluster-name> --zone <ZONE> --project <project-name>
 ```
 
 To check the nodes in your cluster run
