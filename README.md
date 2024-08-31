@@ -213,7 +213,7 @@ curl -s $API_ELB_PUBLIC_FQDN/languages/nodejs | jq .
 If everything works fine, go ahead with Frontend setup.
 ```
 {
-API_ELB_PUBLIC_FQDN=$(kubectl get svc api -ojsonpath="{.status.loadBalancer.ingress[0].hostname}")
+API_ELB_PUBLIC_FQDN=$(kubectl get svc api -ojsonpath="{.status.loadBalancer.ingress[0].ip}")
 echo API_ELB_PUBLIC_FQDN=$API_ELB_PUBLIC_FQDN
 }
 ```
@@ -237,7 +237,7 @@ kubectl expose deploy frontend \
 Confirm that the Frontend ELB is ready to recieve HTTP traffic. In the terminal run the following command:
 ```
 {
-FRONTEND_ELB_PUBLIC_FQDN=$(kubectl get svc frontend -ojsonpath="{.status.loadBalancer.ingress[0].hostname}")
+FRONTEND_ELB_PUBLIC_FQDN=$(kubectl get svc frontend -ojsonpath="{.status.loadBalancer.ingress[0].ip}")
 until nslookup $FRONTEND_ELB_PUBLIC_FQDN >/dev/null 2>&1; do sleep 2 && echo waiting for DNS to propagate...; done
 curl -I $FRONTEND_ELB_PUBLIC_FQDN
 }
