@@ -58,6 +58,9 @@ Susbcribe:
 [https://www.youtube.com/@cloudchamp?
 ](https://www.youtube.com/@cloudchamp?sub_confirmation=1)
 
+<img width="502" alt="image" src="https://github.com/user-attachments/assets/f0ff64b2-165f-40a7-ba55-21cc0c05c226">
+
+
 Create EC2 Instance e2-standard (Optional)
 
 Install gcloud CLI:
